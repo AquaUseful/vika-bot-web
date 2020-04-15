@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+<div>
+    <form action="" method="POST">
+        {{form.hidden_tag()}}
+        {{form.csrf_token}}
+        <div class="form-group">
+            {{form.token.label}}
+            {{form.token(class="form-control")}}
+            {% for error in form.token.errors %}
+            <div class="alert alert-danger" role="alert">
+                {{error}}
+            </div>
+            {% endfor %}
+        </div>
+        {% if message %}
+        <div class="alert alert-danger" role="alert">
+            {{message}}
+        </div>
+        {% endif %}
+        <div>
+            {{form.submit(class="btn btn-primary btn-lg", type="submit", role="button")}}
+        </div>
+    </form>
+</div>
+{% endblock %}
