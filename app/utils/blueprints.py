@@ -1,5 +1,5 @@
 from app import app, logger
-from app.modules import root, index, login, chats
+from app.modules import root, index, login, chat
 
 
 async def register_blueprints():
@@ -7,5 +7,5 @@ async def register_blueprints():
     app.register_blueprint(root.blueprint)
     app.register_blueprint(index.blueprint)
     app.register_blueprint(login.blueprint)
-    app.register_blueprint(chats.blueprint)
+    app.register_blueprint(chat.blueprint)
     logger.info("Modules loaded")

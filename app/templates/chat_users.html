@@ -1,0 +1,16 @@
+{% extends "navbar.html" %}
+{% block content %}
+<div class="container-fluid">
+    <ul class="list-unstyled">
+        {% for user in users %}
+        <li class="media">
+            <img src="{{api_uri}}/{{user['id']}}/photo" alt="Avatar" width="64" height="64">
+            <h5>{{user["first_name"]}} {% if user["last_name"]%}{{user["last_name"]}}{% endif %}
+                {% if user["is_admin"]%}<span class="badge badge-primary">admin</span>{% endif %}
+                {% if user["bot"]%}<span class="badge badge-warning">bot</span>{% endif %}
+            </h5>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
