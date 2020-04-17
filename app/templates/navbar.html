@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 
 {% block navbar %}
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+<header class="navbar navbar-expand-lg navbar-dark bg-primary">
     <a class="navbar-brand" href="#">Vika bot</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-item"></span>
     </button>
-    <div class="collapse navbar-collapse" id="nevbarNav">
+    <div class="collapse navbar-collapse" id="navbarNav">
         <div class="navbar-nav">
             {% for item in nav_items %}
             <a class="nav-item nav-link {% if item['active'] %}active{% endif %}" href="{{item['href']}}">
@@ -19,7 +19,7 @@
             {% endfor %}
         </div>
     </div>
-</nav>
+</header>
 {% endblock %}
 
 {% block content %}

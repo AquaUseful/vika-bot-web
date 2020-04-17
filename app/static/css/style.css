@@ -1,0 +1,7 @@
+.avatar-loading {
+    background-color: transparent;
+    background-position: center;
+    background-image: url("../img/blank_avatar.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+}
