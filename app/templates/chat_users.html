@@ -1,16 +1,17 @@
 {% extends "navbar.html" %}
 {% block content %}
-<main class="container" role="main">
+<main class="container pt-2" role="main">
     <ul class="list-unstyled">
         {% for user in users %}
-        <li class="media">
-            <img class="avatar-loading" src="{{api_uri}}/{{user['id']}}/photo" alt=" " width="64" height="64">
+        <li class="media mb-2">
+            <img class="avatar-loading mr-3" src="{{api_uri}}/{{user['id']}}/photo" alt=" " width="64" height="64">
             <div class="media-body">
                 <h5 class="m-0 p-0">{{user["first_name"]}} {% if user["last_name"]%}{{user["last_name"]}}{% endif %}
                     {% if user["is_admin"]%}<span class="badge badge-primary">admin</span>{% endif %}
                     {% if user["bot"]%}<span class="badge badge-warning">bot</span>{% endif %}
                 </h5>
-                {% if user["username"] %}<small>@{{user["username"]}}</small>{% endif %}
+                {% if user["username"] %}<p class="username m-0"><small>@{{user["username"]}}</small></p>{% endif %}
+                <button class="btn btn-primary" type="button"></button>
             </div>
         </li>
         {% endfor %}
