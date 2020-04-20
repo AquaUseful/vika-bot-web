@@ -1,4 +1,5 @@
 {% extends "navbar.html" %}
+
 {% block content %}
 <main class="container pt-2" role="main">
     <ul class="list-unstyled">
@@ -6,15 +7,43 @@
         <li class="media mb-2">
             <img class="avatar-loading mr-3" src="{{api_uri}}/{{user['id']}}/photo" alt=" " width="64" height="64">
             <div class="media-body">
-                <h5 class="m-0 p-0">{{user["first_name"]}} {% if user["last_name"]%}{{user["last_name"]}}{% endif %}
-                    {% if user["is_admin"]%}<span class="badge badge-primary">admin</span>{% endif %}
-                    {% if user["bot"]%}<span class="badge badge-warning">bot</span>{% endif %}
-                </h5>
-                {% if user["username"] %}<p class="username m-0"><small>@{{user["username"]}}</small></p>{% endif %}
-                <button class="btn btn-primary" type="button"></button>
+                <div class="container">
+                    <div class="row">
+                        <div class="col">
+                            <h5 class="m-0 p-0">{{user["first_name"]}}
+                                {% if user["last_name"]%}{{user["last_name"]}}{% endif %}
+                                {% if user["is_admin"]%}<span class="badge badge-primary">admin</span>{% endif %}
+                                {% if user["bot"]%}<span class="badge badge-warning">bot</span>{% endif %}
+                            </h5>
+                            {% if user["username"] %}<p class="username m-0"><small>@{{user["username"]}}</small></p>
+                            {% endif %}
+                        </div>
+                        <div class="col-md-auto">
+                            <div class="spinner-border spinner-border-sm mr-1" role="status" user_id="{{user['id']}}">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                            {% if user["is_admin"] %}
+                            {% set btn_state = "disabled" %}
+                            {% else %}
+                            {% set btn_state = "" %}
+                            {% endif %}
+                            <div class="btn-group" role="group" aria-label="User actions">
+                                <button class="btn btn-warning btn-kick" type="button" {{btn_state}}
+                                    user_id="{{user['id']}}">Kick</button>
+                                <button class="btn btn-danger btn-ban" type="button" {{btn_state}}
+                                    user_id="{{user['id']}}">Ban</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </li>
         {% endfor %}
     </ul>
 </main>
+{% endblock %}
+
+{% block scripts %}
+{{super()}}
+<script src="/static/js/users.js"></script>
 {% endblock %}

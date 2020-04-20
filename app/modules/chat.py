@@ -59,3 +59,15 @@ async def users():
     api_uri = await utils.join_uri((config.BOT_URI, "api", "users"))
     return await quart.render_template("chat_users.html", title="Users",
                                        nav_items=nav_items, users=users, api_uri=api_uri)
+
+
+@blueprint.route("/chat/users/ban", methods=["POST"])
+@decorators.need_token
+@decorators.req_fields({"user_id": int})
+async def ban_user():
+    req_json = await quart.request.json
+    url = await utils.join_uri((config.BOT_URI, "api", "bans", "ban"))
+    json = {"token": quart.session["token"], "user_id": req_json["user_id"]}
+    async with session.post(url, json=json) as resp:
+        json_resp = await resp.json()
+        return quart.jsonify(json_resp)
