@@ -19,6 +19,10 @@
                             {% if user["username"] %}<p class="username m-0"><small>@{{user["username"]}}</small></p>
                             {% endif %}
                         </div>
+                        <div class="col">
+                            <div class="alert alert-danger" user_id="{{user['id']}}">
+                            </div>
+                        </div>
                         <div class="col-md-auto">
                             <div class="spinner-border spinner-border-sm mr-1" role="status" user_id="{{user['id']}}">
                                 <span class="sr-only">Loading...</span>
@@ -29,7 +33,7 @@
                             {% set btn_state = "" %}
                             {% endif %}
                             {% if user["is_banned"] %}
-                            <button class="btn btn-secondary btn-unban">
+                            <button class="btn btn-secondary btn-unban" user_id="{{user['id']}}">
                                 Unban
                             </button>
                             {% else %}
@@ -40,8 +44,6 @@
                                     user_id="{{user['id']}}">Ban</button>
                             </div>
                             {% endif %}
-                            <div class="alert alert-danger" role="alert" user_id="{{user['id']}}">
-                            </div>
                         </div>
                     </div>
                 </div>
