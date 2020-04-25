@@ -29,9 +29,7 @@ async def get_chat_users(token, chat_info=None):
     users = chat_info["members"]
     url = await utils.join_uri((config.BOT_URI, "api", "users", "info"))
     json = {"ids": users}
-    async with session.post(url, json=json) as resp:
-        json_resp = await resp.json()
-        return json_resp
+    return await utils.make_post_req_json(url, json)
 
 
 @blueprint.route("/chat/dashboard")
@@ -70,9 +68,7 @@ async def ban_user():
     req_json = await quart.request.json
     url = await utils.join_uri((config.BOT_URI, "api", "bans", "ban"))
     json = {"token": quart.session["token"], "user_id": req_json["user_id"]}
-    async with session.post(url, json=json) as resp:
-        json_resp = await resp.json()
-        return quart.jsonify(json_resp)
+    return await utils.make_post_req_json(url, json)
 
 
 @blueprint.route("/chat/users/kick", methods=["POST"])
@@ -83,9 +79,14 @@ async def kick_user():
     url = await utils.join_uri((config.BOT_URI, "api", "kicks", "kick"))
     json = {"token": quart.session["token"], "user_id": req_json["user_id"]}
     logger.debug(url)
-    async with session.post(url, json=json) as resp:
-        logger.debug(await resp.read())
-        json_resp = await resp.json()
-        return quart.jsonify(json_resp)
+    return await utils.make_post_req_json(url, json)
 
-@blueprint.route("/caht")
+
+@blueprint.route("/chat/users/unban", methods=["POST"])
+@decorators.need_token
+@decorators.req_fields({"user_id": int})
+async def unban_user():
+    req_json = await quart.request.json
+    url = await utils.join_uri((config.BOT_URI, "api", "bans", "unban"))
+    json = {"token": quart.session["token"], "user_id": req_json["user_id"]}
+    return await utils.make_post_req_json(url, json)
