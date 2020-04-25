@@ -26,8 +26,12 @@ function showAlert(user_id, timeout) {
     $(`div.alert[user_id=${user_id}]`).slideDown("slow", function () {
         setTimeout(function () {
             $(`div.alert[user_id=${user_id}]`).slideUp("slow");
-        }, 2000);
+        }, timeout);
     });
+};
+
+function setAlertText(user_id, text) {
+    $(`div.alert[user_id=${user_id}]`).text(text);
 };
 
 function banUser() {
@@ -45,7 +49,10 @@ function banUser() {
         if (data.result) {
             window.location.reload();
         } else {
-
+            hideSpinner(user_id);
+            disableButtons(user_id);
+            setAlertText(user_id, "This user can not be banned!");
+            showAlert(user_id, 2000);
         };
     });
     jqxhr.fail(function (jqxhr, textStatus) {
@@ -71,8 +78,8 @@ function kickUser() {
         } else {
             hideSpinner(user_id);
             disableButtons(user_id);
-            $(`div.alert[user_id=${user_id}]`).text("This user can not be kicked!");
-            showAlert(user_id, 1000);
+            setAlertText(user_id, "This user can not be kicked!");
+            showAlert(user_id, 2000);
         };
     });
     jqxhr.fail(function (jqxhr, textStatus) {
@@ -97,6 +104,8 @@ function unbanUser() {
         } else {
             hideSpinner(user_id);
             disableButtons(user_id);
+            setAlertText(user_id, "This user can not be unbanned!");
+            showAlert(user_id, 2000);
         };
     });
     jqxhr.fail(function (jqxhr, textStatus) {
