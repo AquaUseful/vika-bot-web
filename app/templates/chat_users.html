@@ -14,6 +14,7 @@
                                 {% if user["last_name"]%}{{user["last_name"]}}{% endif %}
                                 {% if user["is_admin"]%}<span class="badge badge-primary">admin</span>{% endif %}
                                 {% if user["bot"]%}<span class="badge badge-warning">bot</span>{% endif %}
+                                {% if user["is_banned"] %}<span class="badge badge-danger">banned</span>{% endif %}
                             </h5>
                             {% if user["username"] %}<p class="username m-0"><small>@{{user["username"]}}</small></p>
                             {% endif %}
@@ -27,11 +28,19 @@
                             {% else %}
                             {% set btn_state = "" %}
                             {% endif %}
+                            {% if user["is_banned"] %}
+                            <button class="btn btn-secondary btn-unban">
+                                Unban
+                            </button>
+                            {% else %}
                             <div class="btn-group" role="group" aria-label="User actions">
                                 <button class="btn btn-warning btn-kick" type="button" {{btn_state}}
                                     user_id="{{user['id']}}">Kick</button>
                                 <button class="btn btn-danger btn-ban" type="button" {{btn_state}}
                                     user_id="{{user['id']}}">Ban</button>
+                            </div>
+                            {% endif %}
+                            <div class="alert alert-danger" role="alert" user_id="{{user['id']}}">
                             </div>
                         </div>
                     </div>

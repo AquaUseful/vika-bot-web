@@ -1,6 +1,8 @@
 $(document).ready(function () {
     $("div.spinner-border").hide();
+    $("div.alert").hide();
     $("button.btn-ban").click(banUser);
+    $("button.btn-kick").click(kickUser);
 });
 
 function showSpinner(user_id) {
@@ -37,7 +39,7 @@ function banUser() {
     });
     jqxhr.done(function (data) {
         if (data.result) {
-
+            window.location.reload();
         } else {
 
         };
@@ -46,4 +48,56 @@ function banUser() {
 
     });
 
+};
+
+function kickUser() {
+    user_id = $(this).attr("user_id");
+    disableButtons(user_id);
+    showSpinner(user_id);
+    let jqxhr = $.ajax("/chat/users/kick",
+        {
+            method: "POST",
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({ user_id: parseInt(user_id) })
+        });
+    jqxhr.always(function (data) {
+        enableButtons(user_id);
+        hideSpinner(user_id);
+    });
+    jqxhr.done(function (data) {
+        if (data.result) {
+            window.location.reload();
+        } else {
+        };
+    });
+    jqxhr.fail(function (jqxhr, textStatus) {
+
+    });
+};
+
+function unbanUser() {
+    user_id = $(this).attr("user_id");
+    disableButtons(user_id);
+    showSpinner(user_id);
+    let jqxhr = $.ajax("/chat/users/unban",
+        {
+            method: "POST",
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({ user_id: parseInt(user_id) })
+        });
+    jqxhr.always(function (data) {
+        enableButtons(user_id);
+        hideSpinner(user_id);
+    });
+    jqxhr.done(function (data) {
+        if (data.result) {
+            window.location.reload();
+        } else {
+        };
+    });
+    jqxhr.fail(function (jqxhr, textStatus) {
+
+    });
 };

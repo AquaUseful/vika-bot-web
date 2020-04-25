@@ -50,11 +50,13 @@ async def users():
     token = quart.session["token"]
     chat_info = await get_chat_info(token)
     admins = chat_info["admins"]
+    banned = chat_info["banned"]
     users = list((await get_chat_users(token, chat_info)).values())
     keys = ("first_name", "last_name", "username", "id", "bot")
     for n, user in enumerate(users):
         users[n] = await utils.select_items_by_keys(user, keys)
         users[n]["is_admin"] = user["id"] in admins
+        users[n]["is_banned"] = user["id"] in banned
     logger.debug("%s", users)
     api_uri = await utils.join_uri((config.BOT_URI, "api", "users"))
     return await quart.render_template("chat_users.html", title="Users",
@@ -71,3 +73,19 @@ async def ban_user():
     async with session.post(url, json=json) as resp:
         json_resp = await resp.json()
         return quart.jsonify(json_resp)
+
+
+@blueprint.route("/chat/users/kick", methods=["POST"])
+@decorators.need_token
+@decorators.req_fields({"user_id": int})
+async def kick_user():
+    req_json = await quart.request.json
+    url = await utils.join_uri((config.BOT_URI, "api", "kicks", "kick"))
+    json = {"token": quart.session["token"], "user_id": req_json["user_id"]}
+    logger.debug(url)
+    async with session.post(url, json=json) as resp:
+        logger.debug(await resp.read())
+        json_resp = await resp.json()
+        return quart.jsonify(json_resp)
+
+@blueprint.route("/caht")
