@@ -56,7 +56,10 @@ function banUser() {
         };
     });
     jqxhr.fail(function (jqxhr, textStatus) {
-
+        hideSpinner(user_id);
+        enableButtons(user_id);
+        setAlertText(`Request failed! (${textStatus})`);
+        showAlert(user_id, 2000);
     });
 
 };
@@ -83,7 +86,10 @@ function kickUser() {
         };
     });
     jqxhr.fail(function (jqxhr, textStatus) {
-
+        hideSpinner(user_id);
+        enableButtons(user_id);
+        setAlertText(`Request failed! (${textStatus})`);
+        showAlert(user_id, 2000);
     });
 };
 
@@ -109,6 +115,9 @@ function unbanUser() {
         };
     });
     jqxhr.fail(function (jqxhr, textStatus) {
-
+        hideSpinner(user_id);
+        enableButtons(user_id);
+        setAlertText(`Request failed! (${textStatus})`);
+        showAlert(user_id, 2000);
     });
 };
