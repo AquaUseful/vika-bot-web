@@ -122,11 +122,48 @@ function promoteUser() {
     disableButtons(userID);
     showSpinner(userID);
     let params = ajaxParams;
-    params.data = JSON.stringify({ user_id: parseInt(userID) })
-    let jqxhr = $.ajax("/chat/users/kick", params);
+    params.data = JSON.stringify({ user_id: parseInt(userID) });
+    let jqxhr = $.ajax("/chat/users/promote", params);
+    jqxhr.done(function (data) {
+        if (data.result) {
+            window.location.reload();
+        } else {
+            hideSpinner(userID);
+            disableButtons(userId);
+            setAlertText(userID, "This user can not be promoted!");
+            showAlert(userID, 2000);
+        };
+    });
+    jqxhr.fail(function (jqxhr, textStatus) {
+        hideSpinner(userID);
+        enableButtons(userID);
+        setAlertText(`Request failed! (${textStatus})`);
+        showAlert(userID, 2000);
+    });
 };
 
 function demoteUser() {
     userID = $(this).attr("user_id");
+    disableButtons(userID);
+    showSpinner(userID);
+    let params = ajaxParams;
+    params.data = JSON.stringify({ user_id: parseInt(userID) });
+    let jqxhr = $.ajax("/chat/users/demote", params);
+    jqxhr.done(function (data) {
+        if (data.result) {
+            window.location.reload();
+        } else {
+            hideSpinner(userID);
+            disableButtons(userId);
+            setAlertText(userID, "This user can not be demoted!");
+            showAlert(userID, 2000);
+        };
+    });
+    jqxhr.fail(function (jqxhr, textStatus) {
+        hideSpinner(userID);
+        enableButtons(userID);
+        setAlertText(`Request failed! (${textStatus})`);
+        showAlert(userID, 2000);
+    });
 
 };
