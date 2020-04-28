@@ -37,7 +37,8 @@ async def get_chat_users(token, chat_info=None):
 async def dashboard():
     nav_items = copy.deepcopy(navbar_templ)
     nav_items[0]["active"] = True
-    return await quart.render_template("chat_dashboard.html", title="Dashboard", nav_items=nav_items)
+    chat = await get_chat_info(quart.session["token"])
+    return await quart.render_template("chat_dashboard.html", title="Dashboard", nav_items=nav_items, chat=chat)
 
 
 @blueprint.route("/chat/users")
@@ -90,3 +91,36 @@ async def unban_user():
     url = await utils.join_uri((config.BOT_URI, "api", "bans", "unban"))
     json = {"token": quart.session["token"], "user_id": req_json["user_id"]}
     return await utils.make_post_req_json(url, json)
+
+
+@blueprint.route("/chat/users/promote", methods=["POST"])
+@decorators.need_token
+@decorators.req_fields({"user_id": int})
+async def promote_user():
+    req_json = await quart.request.json
+    url = await utils.join_uri((config.BOT_URI, "api", "promotions", "promote"))
+    json = {"token": quart.session["token"], "user_id": req_json["user_id"]}
+    return await utils.make_post_req_json(url, json)
+
+
+@blueprint.route("/chat/users/demote")
+@decorators.need_token
+@decorators.req_fields({"user_id": int})
+async def demote_user():
+    req_json = await quart.request.json
+    url = await utils.join_uri((config.BOT_URI, "api", "promotions", "demote"))
+    json = {"token": quart.session["token"], "user_id": req_json["user_id"]}
+    return await utils.make_post_req_json(url, json)
+
+
+@blueprint.route("/chat/photo")
+@decorators.need_token
+async def photo():
+    url = await utils.join_uri((config.BOT_URI, "api", "chats", "photo"))
+    json = {"token": quart.session["token"]}
+    photo = await utils.make_post_req_bin(url, json)
+    resp = await quart.make_response(photo)
+    resp.headers.set("Content-Type", "image/jpeg")
+    resp.headers.set("Content-Disposition", "attachment",
+                     filename="chat_profile_photo.jpeg")
+    return resp

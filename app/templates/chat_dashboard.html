@@ -1,6 +1,14 @@
 {% extends "navbar.html"%}
 {% block content %}
-<div class="container-fluid">
+<main class="container pt-2">
+    <div class="media">
+        <img src="/chat/photo" class="avatar-loading mr-3" alt=" " width="128" height="128">
+        <div class="media-body">
+            <h1>
+                {{chat["title"]}}
+            </h1>
 
-</div>
+        </div>
+    </div>
+</main>
 {% endblock %}

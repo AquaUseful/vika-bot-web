@@ -17,3 +17,9 @@ async def make_post_req_json(url, json):
     async with session.post(url, json=json) as resp:
         json_resp = await resp.json()
         return json_resp
+
+
+async def make_post_req_bin(url, json):
+    async with session.post(url, json=json) as resp:
+        bytes = await resp.content.read()
+        return bytes
