@@ -28,15 +28,20 @@
                                 <span class="sr-only">Loading...</span>
                             </div>
                             {% if user["is_admin"] %}
-                            {% set btn_state = "disabled" %}
+                            <button class="btn btn-primary btn-demote" user_id="{{user['id']}}">Demote</button>
                             {% else %}
-                            {% set btn_state = "" %}
+                            <button class="btn btn-success btn-promote" user_id="{{user['id']}}">Promote</button>
                             {% endif %}
                             {% if user["is_banned"] %}
                             <button class="btn btn-secondary btn-unban" user_id="{{user['id']}}">
                                 Unban
                             </button>
                             {% else %}
+                            {% if user["is_admin"] %}
+                            {% set btn_state = "disabled" %}
+                            {% else %}
+                            {% set btn_state = "" %}
+                            {% endif %}
                             <div class="btn-group" role="group" aria-label="User actions">
                                 <button class="btn btn-warning btn-kick" type="button" {{btn_state}}
                                     user_id="{{user['id']}}">Kick</button>
