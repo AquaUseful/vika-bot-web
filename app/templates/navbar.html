@@ -19,6 +19,13 @@
             {% endfor %}
         </div>
     </div>
+    <div>
+        {% if session["token"] %}
+        <a class="btn btn-secondary" href="/logout">Logout</a>
+        {% else %}
+        <a class="btn btn-secondary" href="/login"></a>
+        {% endif %}
+    </div>
 </header>
 {% endblock %}
 
