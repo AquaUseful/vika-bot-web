@@ -4,10 +4,14 @@
     <div class="media">
         <img src="/chat/photo" class="avatar-loading mr-3" alt=" " width="128" height="128">
         <div class="media-body">
-            <h1>
+            <h1 class="mb-5">
                 {{chat["title"]}}
             </h1>
-
+            <div class="pl-3">
+                <h4>Members count: {{chat["members"] | length}}</h4>
+                <h4>Admins count: {{chat["admins"] | length}}</h4>
+                <h4>Banned count: {{chat["banned"] | length}}</h4>
+            </div>
         </div>
     </div>
 </main>
