@@ -103,7 +103,7 @@ async def promote_user():
     return await utils.make_post_req_json(url, json)
 
 
-@blueprint.route("/chat/users/demote")
+@blueprint.route("/chat/users/demote", methods=["POST"])
 @decorators.need_token
 @decorators.req_fields({"user_id": int})
 async def demote_user():
