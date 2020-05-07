@@ -1,0 +1,9 @@
+
+# Config named "config.py" must be in app folder
+
+HOST = ""
+HOST_IPV6 = ""
+PORT = 0000
+
+# Address of the bot's api
+BOT_URI = ""

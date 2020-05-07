@@ -5,9 +5,11 @@ let ajaxParams = {
     data: ""
 }
 
-$(document).ready(function() {
+$(document).ready(function () {
+    // Hide some elemnts to show them later
     $("div.spinner-border").hide();
     $("div.alert").hide();
+    // Connect buttons to functions
     $("button.btn-ban").click(banUser);
     $("button.btn-unban").click(unbanUser);
     $("button.btn-kick").click(kickUser);

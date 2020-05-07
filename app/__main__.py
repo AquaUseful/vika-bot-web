@@ -25,6 +25,9 @@ hypercorn_cfg.bind = [f"{config.HOST}:{config.PORT}",
                       f"[{config.HOST_IPV6}]:{config.PORT}"]
 
 loop = asyncio.get_event_loop()
+
+# Connect SIGINT to shutdown
 loop.add_signal_handler(signal.SIGINT, signal_handler)
+
 loop.run_until_complete(hypercorn.asyncio.serve(app, hypercorn_cfg,
                                                 shutdown_trigger=shutdown_event.wait))
