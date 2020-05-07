@@ -6,11 +6,15 @@ let ajaxParams = {
 }
 
 $(document).ready(function () {
+    // Hide some elemnts to show them later
     $("div.spinner-border").hide();
     $("div.alert").hide();
+    // Connect buttons to functions
     $("button.btn-ban").click(banUser);
     $("button.btn-kick").click(kickUser);
     $("button.btn-unban").click(unbanUser);
+    $("button.btn-promote").click(promoteUser);
+    $("button.btn-demote").click(demoteUser);
 });
 
 function showSpinner(userID) {

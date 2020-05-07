@@ -52,6 +52,7 @@ async def users():
     banned = chat_info["banned"]
     users = list((await get_chat_users(token, chat_info)).values())
     keys = ("first_name", "last_name", "username", "id", "bot")
+    # Add some fields for tem[plate rendering
     for n, user in enumerate(users):
         users[n] = await utils.select_items_by_keys(user, keys)
         users[n]["is_admin"] = user["id"] in admins
@@ -69,7 +70,8 @@ async def ban_user():
     req_json = await quart.request.json
     url = await utils.join_uri((config.BOT_URI, "api", "bans", "ban"))
     json = {"token": quart.session["token"], "user_id": req_json["user_id"]}
-    return await utils.make_post_req_json(url, json)
+    resp = await utils.make_post_req_json(url, json)
+    return quart.jsonify(resp)
 
 
 @blueprint.route("/chat/users/kick", methods=["POST"])
@@ -79,8 +81,8 @@ async def kick_user():
     req_json = await quart.request.json
     url = await utils.join_uri((config.BOT_URI, "api", "kicks", "kick"))
     json = {"token": quart.session["token"], "user_id": req_json["user_id"]}
-    logger.debug(url)
-    return await utils.make_post_req_json(url, json)
+    resp = await utils.make_post_req_json(url, json)
+    return quart.jsonify(resp)
 
 
 @blueprint.route("/chat/users/unban", methods=["POST"])
@@ -90,7 +92,8 @@ async def unban_user():
     req_json = await quart.request.json
     url = await utils.join_uri((config.BOT_URI, "api", "bans", "unban"))
     json = {"token": quart.session["token"], "user_id": req_json["user_id"]}
-    return await utils.make_post_req_json(url, json)
+    resp = await utils.make_post_req_json(url, json)
+    return quart.jsonify(resp)
 
 
 @blueprint.route("/chat/users/promote", methods=["POST"])
@@ -100,7 +103,8 @@ async def promote_user():
     req_json = await quart.request.json
     url = await utils.join_uri((config.BOT_URI, "api", "promotions", "promote"))
     json = {"token": quart.session["token"], "user_id": req_json["user_id"]}
-    return await utils.make_post_req_json(url, json)
+    resp = await utils.make_post_req_json(url, json)
+    return quart.jsonify(resp)
 
 
 @blueprint.route("/chat/users/demote")
@@ -110,7 +114,8 @@ async def demote_user():
     req_json = await quart.request.json
     url = await utils.join_uri((config.BOT_URI, "api", "promotions", "demote"))
     json = {"token": quart.session["token"], "user_id": req_json["user_id"]}
-    return await utils.make_post_req_json(url, json)
+    resp = await utils.make_post_req_json(url, json)
+    return quart.jsonify(resp)
 
 
 @blueprint.route("/chat/photo")

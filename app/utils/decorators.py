@@ -3,6 +3,7 @@ import functools
 from app import logger
 
 
+# Call function only when token is in session
 def need_token(func):
     @functools.wraps(func)
     async def wrapper(*args, **kwargs):
@@ -13,6 +14,7 @@ def need_token(func):
     return wrapper
 
 
+# Check request's json for field names and types
 def req_fields(fields: dict):
     def decorator(func):
         @functools.wraps(func)
