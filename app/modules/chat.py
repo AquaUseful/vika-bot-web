@@ -28,7 +28,7 @@ async def get_chat_users(token, chat_info=None):
         chat_info = await get_chat_info(token)
     users = chat_info["members"]
     url = await utils.join_uri((config.BOT_URI, "api", "users", "info"))
-    json = {"ids": users}
+    json = {"ids": users, "token": token}
     return await utils.make_post_req_json(url, json)
 
 
