@@ -20,7 +20,6 @@ multidict
 priority
 Quart
 toml
-typing-extensions.3
 Werkzeug
 wsproto
 WTForms
