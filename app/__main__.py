@@ -18,7 +18,7 @@ def signal_handler():
     shutdown_event.set()
 
 
-asyncio.ensure_future(blueprints.register_blueprints())
+blueprints.register_blueprints(app)
 
 hypercorn_cfg = hypercorn.Config()
 hypercorn_cfg.bind = [f"{config.HOST}:{config.PORT}",

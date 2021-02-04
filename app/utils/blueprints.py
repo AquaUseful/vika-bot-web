@@ -2,7 +2,7 @@ from app import app, logger
 from app.modules import root, index, login, chat, logout
 
 
-async def register_blueprints():
+def register_blueprints(app):
     logger.info("Loading modules...")
     app.register_blueprint(root.blueprint)
     app.register_blueprint(index.blueprint)
