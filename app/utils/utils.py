@@ -1,5 +1,10 @@
 import aiohttp
 from app import session
+import os
+try:
+    from app import config
+except ImportError:
+    pass
 
 
 async def join_uri(uri_parts):
@@ -23,3 +28,11 @@ async def make_post_req_bin(url, json):
     async with session.post(url, json=json) as resp:
         bytes = await resp.content.read()
         return bytes
+
+
+async def get_bot_uri():
+    try:
+        bot_uri = config.BOT_URI
+    except NameError:
+        bot_uri = os.environ["BOT_URI"]
+    return bot_uri

@@ -2,8 +2,13 @@ import asyncio
 import hypercorn
 import signal
 import sys
-from app import app, session, config
+import os
 from app.utils import blueprints
+from app import app, session
+try:
+    from app import config
+except ImportError:
+    pass
 
 
 shutdown_event = asyncio.Event()
@@ -21,8 +26,12 @@ def signal_handler():
 blueprints.register_blueprints(app)
 
 hypercorn_cfg = hypercorn.Config()
-hypercorn_cfg.bind = [f"{config.HOST}:{config.PORT}",
-                      f"[{config.HOST_IPV6}]:{config.PORT}"]
+try:
+    hypercorn_cfg.bind = [f"{config.HOST}:{config.PORT}",
+                          f"[{config.HOST_IPV6}]:{config.PORT}"]
+except NameError:
+    hypercorn_cfg.bind = [f"{os.environ['HOST']}:{os.environ['PORT']}",
+                          f"[{os.environ['HOST_IPV6']}]:{os.environ['PORT']}"]
 
 loop = asyncio.get_event_loop()
 
